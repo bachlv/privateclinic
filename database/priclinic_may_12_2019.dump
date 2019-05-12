@@ -1,0 +1,223 @@
+-- MySQL dump 10.13  Distrib 5.7.23, for macos10.13 (x86_64)
+--
+-- Host: localhost    Database: PriClinic
+-- ------------------------------------------------------
+-- Server version	8.0.16
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Doctor`
+--
+
+DROP TABLE IF EXISTS `Doctor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Doctor` (
+  `employee_id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `specialist` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  KEY `employee_id` (`employee_id`),
+  CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Doctor`
+--
+
+LOCK TABLES `Doctor` WRITE;
+/*!40000 ALTER TABLE `Doctor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Doctor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DoctorPatient`
+--
+
+DROP TABLE IF EXISTS `DoctorPatient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `DoctorPatient` (
+  `patient_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `employee_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `appointment_id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`appointment_id`),
+  KEY `patient_id` (`patient_id`),
+  KEY `employee_id` (`employee_id`),
+  CONSTRAINT `doctorpatient_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+  CONSTRAINT `doctorpatient_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DoctorPatient`
+--
+
+LOCK TABLES `DoctorPatient` WRITE;
+/*!40000 ALTER TABLE `DoctorPatient` DISABLE KEYS */;
+/*!40000 ALTER TABLE `DoctorPatient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Employee`
+--
+
+DROP TABLE IF EXISTS `Employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Employee` (
+  `employee_id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `gender` char(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `position` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Employee`
+--
+
+LOCK TABLES `Employee` WRITE;
+/*!40000 ALTER TABLE `Employee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MedicalRecord`
+--
+
+DROP TABLE IF EXISTS `MedicalRecord`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MedicalRecord` (
+  `record_ID` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `employee_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `patient_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `treat_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `symptom` text COLLATE utf8mb4_general_ci,
+  `disease` text COLLATE utf8mb4_general_ci,
+  `appointment_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`record_ID`),
+  KEY `appointment_id` (`appointment_id`),
+  KEY `employee_id` (`employee_id`),
+  KEY `patient_id` (`patient_id`),
+  KEY `treat_id` (`treat_id`),
+  CONSTRAINT `medicalrecord_ibfk_1` FOREIGN KEY (`appointment_id`) REFERENCES `doctorpatient` (`appointment_id`),
+  CONSTRAINT `medicalrecord_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
+  CONSTRAINT `medicalrecord_ibfk_3` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
+  CONSTRAINT `medicalrecord_ibfk_4` FOREIGN KEY (`treat_id`) REFERENCES `treatment` (`treat_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MedicalRecord`
+--
+
+LOCK TABLES `MedicalRecord` WRITE;
+/*!40000 ALTER TABLE `MedicalRecord` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MedicalRecord` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Medicine`
+--
+
+DROP TABLE IF EXISTS `Medicine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Medicine` (
+  `med_id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `quantity` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `price` decimal(15,2) DEFAULT NULL,
+  `med_usage` text COLLATE utf8mb4_general_ci,
+  PRIMARY KEY (`med_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Medicine`
+--
+
+LOCK TABLES `Medicine` WRITE;
+/*!40000 ALTER TABLE `Medicine` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Medicine` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Patient`
+--
+
+DROP TABLE IF EXISTS `Patient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Patient` (
+  `patient_id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `yearofbirth` date DEFAULT NULL,
+  `gender` char(1) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `addess` text COLLATE utf8mb4_general_ci,
+  PRIMARY KEY (`patient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Patient`
+--
+
+LOCK TABLES `Patient` WRITE;
+/*!40000 ALTER TABLE `Patient` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Patient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Treatment`
+--
+
+DROP TABLE IF EXISTS `Treatment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Treatment` (
+  `treat_id` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `med_id` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `symptom` text COLLATE utf8mb4_general_ci,
+  `cost` decimal(15,2) DEFAULT NULL,
+  PRIMARY KEY (`treat_id`),
+  KEY `med_id` (`med_id`),
+  CONSTRAINT `treatment_ibfk_1` FOREIGN KEY (`med_id`) REFERENCES `medicine` (`med_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Treatment`
+--
+
+LOCK TABLES `Treatment` WRITE;
+/*!40000 ALTER TABLE `Treatment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Treatment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'PriClinic'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-05-12 18:01:16
