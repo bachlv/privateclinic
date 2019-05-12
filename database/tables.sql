@@ -21,7 +21,7 @@ CREATE TABLE Treatment (
 CREATE TABLE Patient (
 	patient_id VARCHAR(5) Not NULL PRIMARY KEY,
 	name VARCHAR(100),
-	yearofbirth DATE,
+	birthday DATE,
 	gender CHAR,
 	addess TEXT
 );
