@@ -298,7 +298,7 @@ safe-buffer@^5.0.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
-serverless-google-cloudfunctions@*:
+serverless-google-cloudfunctions@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/serverless-google-cloudfunctions/-/serverless-google-cloudfunctions-2.3.2.tgz#cb642636b5a566646e5e1592dd2c3c32d695791a"
   integrity sha512-aDIpoZ7laJNI+HgXn5ktCUxyyMkqUBX2oNNd7TDKtgIs4eQyjKelUQPf5C+89HdolEsDyqRKag3/ok2g085Q7w==

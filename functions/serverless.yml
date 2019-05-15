@@ -1,11 +1,11 @@
-service: server # NOTE: Don't put the word "google" in here
+service: gcf-nodejs # NOTE: Don't put the word "google" in here
 
 provider:
   name: google
   stage: dev
   runtime: nodejs8
-  region: us-central1
-  project: my-project
+  region: asia-east2
+  project: priclinic-22
   # The GCF credentials can be a little tricky to set up. Luckily we've documented this for you here:
   # https://serverless.com/framework/docs/providers/google/guide/credentials/
   #

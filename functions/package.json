@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "google-nodejs",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,6 @@
   "author": "serverless.com",
   "license": "MIT",
   "devDependencies": {
-    "serverless-google-cloudfunctions": "*"
+    "serverless-google-cloudfunctions": "^2.3.2"
   }
 }
