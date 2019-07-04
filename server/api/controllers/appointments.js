@@ -14,8 +14,6 @@ Date.prototype.addHours= function(h){
 
 const appointmentController = {
   all(req, res) {
-    // Returns all appointments
-    // Appointment.find({}).exec((err, appointments) => res.json(appointments));
     db.query("SELECT * FROM Appointment", (err, appointments) => res.json(appointments));
   },
   create(req, res) {
@@ -85,41 +83,7 @@ const appointmentController = {
       });
     });
     
-    //var newapp = `INSERT INTO Appointment (name, email, phone, slot_id) VALUES ('${requestBody.name}', '${requestBody.email}', '${requestBody.phone}', ${newslotID})`;
     
-
-    
-    // Creates a new record from a submitted form
-    /* var newappointment = new Appointment({
-      name: requestBody.name,
-      email: requestBody.email,
-      phone: requestBody.phone,
-      slots: newslot._id
-    }); */
-
-    
-
-
-    // and saves the record to
-    // the data base
-    /* newappointment.save((err, saved) => {
-      // Returns the saved appointment
-      // after a successful save
-      Appointment.find({ _id: saved._id })
-        .populate("slots")
-        .exec((err, appointment) => res.json(appointment));
-
-      const from = 1;
-      const to = 2;
-
-      nexmo.message.sendSms(from, to, msg, (err, responseData) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.dir(responseData);
-        }
-      });
-    }); */
   },
   getSlots (req, res) {
     db.query(`SELECT slot_date, slot_time, COUNT(*) AS singleSlotCount
