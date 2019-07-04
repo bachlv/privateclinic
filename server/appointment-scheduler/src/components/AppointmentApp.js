@@ -19,8 +19,10 @@ import {
 } from "material-ui/Stepper";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
+import _ from "lodash";
 
-const API_BASE = window.location.href;
+//const API_BASE = window.location.href;
+const API_BASE = "http://localhost:8888/";
 
 
 
@@ -48,7 +50,6 @@ class AppointmentApp extends Component {
   
   componentWillMount() {
     axios.get(API_BASE + `api/retrieveSlots`).then(response => {
-      console.log("response via db: ", response.data);
       this.handleDBReponse(response.data);
     });
   }
@@ -130,43 +131,33 @@ class AppointmentApp extends Component {
     const appointments = response;
     const today = moment().startOf("day"); //start of today 12 am
     const initialSchedule = {};
-    initialSchedule[today.format("YYYY-MM-DD")] = true;
-    var counts = {}
-    response.forEach(function(v) {
-      counts[v.slot_time] = (counts[v.slot_time] || 0) + 1;
-    });
-    //console.log(counts);
+    initialSchedule[today.format("YYYY-DD-MM")] = true;
     const schedule = !appointments.length
       ? initialSchedule
       : appointments.reduce((currentSchedule, appointment) => {
           const { slot_date, slot_time } = appointment;
-          const dateString = moment(slot_date, "YYYY-MM-DD").format(
-            "YYYY-MM-DD"
+          const dateString = moment(slot_date, "YYYY-DD-MM").format(
+            "YYYY-DD-MM"
           );
-          
           !currentSchedule[slot_date]
             ? (currentSchedule[dateString] = Array(8).fill(false))
             : null;
-            
-          if (Array.isArray(currentSchedule[dateString])){
-            counts[slot_time] > 4 ?
-            currentSchedule[dateString][slot_time] = true
-            : null
-          };
+          Array.isArray(currentSchedule[dateString])
+            ? (currentSchedule[dateString][slot_time] = true)
+            : null;
           return currentSchedule;
         }, initialSchedule);
-        console.log(schedule)
     for (let day in schedule) {
       let slots = schedule[day];
       slots.length
         ? slots.every(slot => slot === true) ? (schedule[day] = true) : null
         : null;
     }
-
     this.setState({
       schedule: schedule
     });
   }
+  
   renderAppointmentConfirmation() {
     const spanStyle = { color: "#00C853" };
     return (

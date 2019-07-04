@@ -1,5 +1,5 @@
 {
-  "name": "priclinic-scheduler",
+  "name": "priclinic-scheduler-app",
   "version": "1.0.0",
   "description": "Ứng dụng đặt lịch khám qua mạng.",
   "scripts": {
