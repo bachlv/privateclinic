@@ -1,5 +1,11 @@
 const Nexmo = require("nexmo");
-var db = require('../database');
+const moment = require("moment");
+const db = require('../database');
+const nexmo = new Nexmo({
+  apiKey: "b8d18505",
+  apiSecret: "MBOyEtcM9ZV64nhb"
+});
+
 
 Date.prototype.addHours= function(h){
   this.setHours(this.getHours()+h);
@@ -15,14 +21,36 @@ const appointmentController = {
   create(req, res) {
 
     var requestBody = req.body;
-    const nexmo = new Nexmo({
-      apiKey: "b8d18505",
-      apiSecret: "MBOyEtcM9ZV64nhb"
-    });
-
+  
     var creation_time = new Date().addHours(7).toISOString().replace(/T/, ' ').replace(/\..+/, '');
     var newslot = `INSERT INTO AppointmentSlot (slot_time, slot_date, creation_time)
                   VALUES ('${requestBody.slot_time}', '${requestBody.slot_date}', '${creation_time}')`;
+    var time;
+    switch (requestBody.slot_time) {
+      case 0:
+        time = "9h sáng";
+        break;
+      case 1:
+        time = "10h sáng";
+        break;
+      case 2:
+        time = "11h trưa";
+        break;
+      case 3:
+        time = "12h trưa";
+        break;
+      case 4:
+        time = "13h chiều";
+        break;
+      case 5:
+        time = "14h chiều";
+        break;
+      case 6:
+        time = "15h chiều";
+        break;
+      case 7:
+        time = "16h chiều";
+    }
     
     db.query(newslot, (err, savedslot) => {
       if (err) throw err;
@@ -36,26 +64,23 @@ const appointmentController = {
           if (err) throw err;
           res.json(result);
 
-          let text = "Bạn đã đặt lịch khám thành công tại PriClinic." +
-          " " +
-          requestBody.appointment;
-          console.log(requestBody.slot_date);
+          const dateString = moment(requestBody.slot_date, "YYYY-MM-DD").locale('vi').format("dddd[, ngày] LL");
+          var text = "Cảm ơn " + requestBody.name + " đã đặt lịch. Vui lòng đến khám vào " 
+            + dateString + " lúc " + time + ".";
           
-          const from = '45204';
-          const to = '+84389255001';
+          var from = '45204';
+          var to = "+84" + requestBody.phone.substr(1);
           const option = {
             "type": "unicode"
           }
 
-          
-
-          /* nexmo.message.sendSms(from, to, text, option, (err, responseData) => {
+          nexmo.message.sendSms(from, to, text, option, (err, responseData) => {
             if (err) {
               console.log(err);
             } else {
               console.dir(responseData);
             }
-          }); */
+          });
         });
       });
     });

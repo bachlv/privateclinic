@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Ứng dụng đặt lịch khám qua mạng.",
   "scripts": {
-    "start": "npm build appointment-scheduler/ && node api/bin/www"
+    "start": "npm build server/appointment-scheduler/ && node server/pi/bin/www"
   },
   "author": "vietbach22 & lacls",
   "license": "MIT"

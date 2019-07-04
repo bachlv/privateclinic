@@ -20,7 +20,8 @@ import {
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 
-const API_BASE = "http://localhost:8083/";
+const API_BASE = window.location.href;
+
 
 
 class AppointmentApp extends Component {
@@ -431,7 +432,7 @@ class AppointmentApp extends Component {
                         label={
                           contactFormFilled
                             ? "Đặt lịch"
-                            : "Vui lòng điền đầy đủ các thông tin trên trước khi đặt lịch"
+                            : "Vui lòng điền đủ các thông tin trên"
                         }
                         labelPosition="before"
                         primary={true}
