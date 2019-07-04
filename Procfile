@@ -1,1 +1,1 @@
-web: npm install ./server/api/
+web: node
