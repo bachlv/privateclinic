@@ -124,7 +124,7 @@ const appointmentController = {
   getSlots (req, res) {
     db.query(`SELECT slot_date, slot_time, COUNT(*) AS singleSlotCount
     FROM AppointmentSlot GROUP BY slot_date, slot_time
-    HAVING singleSlotCount > ${process.env.maxSingleSlotCount || 4}`, (err, slots) => res.json(slots));
+    HAVING singleSlotCount > ${process.env.maxSingleSlotCount - 1 || 4}`, (err, slots) => res.json(slots));
   }
 };
 

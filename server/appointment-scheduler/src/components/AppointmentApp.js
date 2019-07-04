@@ -19,10 +19,10 @@ import {
 } from "material-ui/Stepper";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
-import _ from "lodash";
 
-//const API_BASE = window.location.href;
-const API_BASE = "http://localhost:8888/";
+const production = window.location.href;
+const development = "http://localhost:8888/";
+const API_BASE = (process.env.NODE_ENV === 'production' ? production : development);
 
 
 
@@ -374,7 +374,7 @@ class AppointmentApp extends Component {
                   Điền thông tin đặt lịch
                 </StepLabel>
                 <StepContent>
-                  <p>
+                  <div>
                     <section>
                       <TextField
                         style={{ display: "block" }}
@@ -438,7 +438,7 @@ class AppointmentApp extends Component {
                         style={{ marginTop: 20, maxWidth: 100 }}
                       />
                     </section>
-                  </p>
+                  </div>
                   {this.renderStepActions(2)}
                 </StepContent>
               </Step>
