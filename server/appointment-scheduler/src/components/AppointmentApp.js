@@ -33,6 +33,8 @@ class AppointmentApp extends Component {
     this.state = {
       firstName: "",
       lastName: "",
+      gender: 0,
+      address: "",
       email: "",
       schedule: [],
       confirmationModalOpen: false,
@@ -67,8 +69,11 @@ class AppointmentApp extends Component {
     this.setState({ confirmationModalOpen: false });
     const newAppointment = {
       name: this.state.lastName + " " + this.state.firstName,
-      email: this.state.email,
+      gender: this.state.gender,
+      birthday: this.state.dateOfBirth,
+      address: this.state.address,
       phone: this.state.phone,
+      email: this.state.email,
       slot_date: moment(this.state.appointmentDate).format("YYYY-MM-DD"),
       slot_time: this.state.appointmentSlot
     };
@@ -166,6 +171,18 @@ class AppointmentApp extends Component {
           Họ và Tên:{" "}
           <span style={spanStyle}>
             {this.state.lastName} {this.state.firstName}
+          </span>
+        </p>
+        <p>
+          Giới tính:{" "}
+          <span style={spanStyle}>
+            {this.state.gender ? "Nữ" : "Nam"}
+          </span>
+        </p>
+        <p>
+          Ngày sinh:{" "}
+          <span style={spanStyle}>
+            {moment(this.state.dateOfBirth).format("[ngày] LL")}
           </span>
         </p>
         <p>
@@ -286,7 +303,7 @@ class AppointmentApp extends Component {
       <div>
         <DatePicker
           DateTimeFormat={Intl.DateTimeFormat}  locale='vi'
-          hintText="Nhấn để chọn ngày"
+          floatingLabelText="Ngày khám"
           mode={smallScreen ? "portrait" : "landscape"}
           onChange={(n, date) => this.handleSetAppointmentDate(date)}
           shouldDisableDate={day => this.checkDisableDate(day)}
@@ -377,7 +394,7 @@ class AppointmentApp extends Component {
                   <div>
                     <section>
                       <TextField
-                        style={{ display: "block" }}
+                        style={{ display: "block",  }}
                         name="last_name"
                         hintText="Nhập họ"
                         floatingLabelText="Họ"
@@ -394,16 +411,31 @@ class AppointmentApp extends Component {
                           this.setState({ firstName: newValue })
                         }
                       />
+                      <SelectField
+                        name="gender"
+                        floatingLabelText="Giới tính"
+                        value={data.gender}
+                        onChange={(evt, key, newValue) =>
+                          this.setState({ gender: newValue })
+                        }
+                        selectionRenderer={value => (value ? "Nam" : "Nữ")}
+                      >
+                        <MenuItem value={0} primaryText="Nữ" />
+                        <MenuItem value={1} primaryText="Nam" />
+                      </SelectField>
+                      <DatePicker
+                        DateTimeFormat={Intl.DateTimeFormat}  locale='vi'
+                        floatingLabelText="Ngày sinh"
+                        mode={smallScreen ? "portrait" : "landscape"}
+                        onChange={(n, date) => this.setState({ dateOfBirth: moment(date).format("YYYY-MM-DD")})}
+                      />
                       <TextField
                         style={{ display: "block" }}
-                        name="email"
-                        hintText="Nhập địa chỉ email"
-                        floatingLabelText="Email"
-                        errorText={
-                          data.validEmail ? null : "Vui lòng nhập một địa chỉ email hợp lệ"
-                        }
+                        name="address"
+                        hintText="Nhập địa chỉ"
+                        floatingLabelText="Địa chỉ"
                         onChange={(evt, newValue) =>
-                          this.validateEmail(newValue)
+                          this.setState({ address: newValue })
                         }
                       />
                       <TextField
@@ -416,6 +448,18 @@ class AppointmentApp extends Component {
                         }
                         onChange={(evt, newValue) =>
                           this.validatePhone(newValue)
+                        }
+                      />
+                      <TextField
+                        style={{ display: "block" }}
+                        name="email"
+                        hintText="Nhập địa chỉ email"
+                        floatingLabelText="Email"
+                        errorText={
+                          data.validEmail ? null : "Vui lòng nhập một địa chỉ email hợp lệ"
+                        }
+                        onChange={(evt, newValue) =>
+                          this.validateEmail(newValue)
                         }
                       />
                       <RaisedButton

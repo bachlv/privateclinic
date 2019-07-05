@@ -52,9 +52,9 @@ const appointmentController = {
     
     db.query(newslot, (err, savedslot) => {
       if (err) throw err;
-      var newappointment = `INSERT INTO Appointment (name, email, phone, slot_id)
-                    VALUES ('${requestBody.name}', '${requestBody.email}',
-                    '${requestBody.phone}', ${savedslot.insertId})`;
+      var newappointment = `INSERT INTO Appointment (name, gender, birthday, address, phone, email, slot_id)
+                    VALUES ('${requestBody.name}', ${requestBody.gender}, '${requestBody.birthday}', 
+                    '${requestBody.address}', '${requestBody.phone}', '${requestBody.email}', ${savedslot.insertId})`;
       db.query(newappointment, (err, savedappointment) => { 
         if (err) throw err;
         var validation = `SELECT * FROM Appointment WHERE appointment_id = ${savedappointment.insertId};`
@@ -82,8 +82,6 @@ const appointmentController = {
         });
       });
     });
-    
-    
   },
   getSlots (req, res) {
     db.query(`SELECT slot_date, slot_time, COUNT(*) AS singleSlotCount
