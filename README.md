@@ -1,6 +1,6 @@
 # PriClinic: Project Intro
 PriClinic is a clinic management solution, including Patient Check-in, Patient Records, Policy, Billing, Report, etc.
-
+by @vietbach22 & @lacls
 ----------
 # **Summary**
 
@@ -21,4 +21,6 @@ PriClinic is a application which covers all aspects of management and operations
 - Manage patient records including personal and medical information such as symptoms and disease.
 - Create invoices automatically from prescriptions.
 
-
+----------
+# **Documentation**
+Check out our [docs](https://github.com/vietbach22/PriClinic/tree/master/docs) for futher information.
