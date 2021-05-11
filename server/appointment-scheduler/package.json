@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "material-ui": "^0.20.0",
     "moment": "^2.20.1",
     "react": "^16.2.0",
